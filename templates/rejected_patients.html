@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rejected Patient Records</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>Rejected Patient Records</h2>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h5 class="mb-3">
+                Total Rejected Records:
+                {{ rejected_records|length }}
+            </h5>
+
+            {% if rejected_records %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-danger">
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Date of Birth</th>
+                            <th>Email</th>
+                            <th>Glucose</th>
+                            <th>Haemoglobin</th>
+                            <th>Cholesterol</th>
+                            <th>Rejection Reason</th>
+                            <th>Rejected At</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for patient in rejected_records %}
+
+                        <tr>
+
+                            <td>{{ patient.id }}</td>
+
+                            <td>{{ patient.full_name }}</td>
+
+                            <td>{{ patient.date_of_birth or 'Not provided' }}</td>
+
+                            <td>{{ patient.email or 'Not provided' }}</td>
+
+                            <td>{{ patient.glucose or 'Not provided' }}</td>
+
+                            <td>{{ patient.haemoglobin or 'Not provided' }}</td>
+
+                            <td>{{ patient.cholesterol or 'Not provided' }}</td>
+
+                            <td class="text-danger">
+                                {{ patient.rejection_reason }}
+                            </td>
+
+                            <td>
+                                {{ patient.created_at.strftime('%d/%m/%Y %H:%M') if patient.created_at else '' }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="alert alert-info">
+                No rejected patient records found.
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
