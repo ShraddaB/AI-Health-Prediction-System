@@ -1,0 +1,6 @@
+
+Flask
+Flask-SQLAlchemy
+email-validator
+python-dotenv
+google-genai
